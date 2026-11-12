@@ -5,9 +5,9 @@ LDFLAGS  ?= -pthread
 BUILD := build
 LIB_SRC := src/order_book.cpp
 
-.PHONY: all test bench sanitize clean
+.PHONY: all test bench demo sanitize clean
 
-all: $(BUILD)/tests $(BUILD)/bench
+all: $(BUILD)/tests $(BUILD)/bench $(BUILD)/demo
 
 $(BUILD):
 	mkdir -p $(BUILD)
@@ -17,6 +17,12 @@ $(BUILD)/tests: tests/test_main.cpp $(LIB_SRC) include/lob/*.hpp | $(BUILD)
 
 $(BUILD)/bench: bench/bench_main.cpp $(LIB_SRC) include/lob/*.hpp | $(BUILD)
 	$(CXX) $(CXXFLAGS) bench/bench_main.cpp $(LIB_SRC) -o $@ $(LDFLAGS)
+
+$(BUILD)/demo: examples/demo.cpp $(LIB_SRC) include/lob/*.hpp | $(BUILD)
+	$(CXX) $(CXXFLAGS) examples/demo.cpp $(LIB_SRC) -o $@ $(LDFLAGS)
+
+demo: $(BUILD)/demo
+	./$(BUILD)/demo
 
 test: $(BUILD)/tests
 	./$(BUILD)/tests

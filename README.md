@@ -17,6 +17,7 @@ No external dependencies; builds with any C++20 compiler.
 ## Build and run
 
 ```bash
+make demo        # interactive: type orders, see trades and the book update
 make test        # unit tests
 make sanitize    # tests under ASan+UBSan and under TSan (data races)
 make bench       # benchmarks: ./build/bench [num_messages] [producer_pace_ns]
